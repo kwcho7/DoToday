@@ -23,27 +23,27 @@ class JobDaoTest: BaseDaoTest() {
         val result = todoDao.insert(
             TodoEntity().apply {
                 title = "job todo mon 1"
-                dayOfWeek = DayOfWeek.MON.nameOfDay
+                dayOfWeekNumber = DayOfWeek.MON.valueOfDay
                 point = 100
             },
             TodoEntity().apply {
                 title = "job todo mon 2"
-                dayOfWeek = DayOfWeek.MON.nameOfDay
+                dayOfWeekNumber = DayOfWeek.MON.valueOfDay
                 point = 100
             },
             TodoEntity().apply {
                 title = "job todo 2"
-                dayOfWeek = DayOfWeek.TUE.nameOfDay
+                dayOfWeekNumber = DayOfWeek.TUE.valueOfDay
                 point = 100
             },
             TodoEntity().apply {
                 title = "job todo 3"
-                dayOfWeek = DayOfWeek.WED.nameOfDay
+                dayOfWeekNumber = DayOfWeek.WED.valueOfDay
                 point = 100
             },
             TodoEntity().apply {
                 title = "job todo 4"
-                dayOfWeek = DayOfWeek.THU.nameOfDay
+                dayOfWeekNumber = DayOfWeek.THU.valueOfDay
                 point = 100
             }
         )
@@ -52,7 +52,7 @@ class JobDaoTest: BaseDaoTest() {
 
     @Test
     fun insertMonJob() {
-        todoDao.getAll(DayOfWeek.MON.nameOfDay)
+        todoDao.getAll(DayOfWeek.MON.valueOfDay)
             .map {
                 it.forEach {
                     jobDao.insert(
@@ -119,7 +119,7 @@ class JobDaoTest: BaseDaoTest() {
     @Test
     fun getMonAll() {
         insertAllJob()
-        jobDao.getAll(DayOfWeek.THU.nameOfDay)
+        jobDao.getAll(DayOfWeek.THU.valueOfDay)
             .subscribe(
                 {
                     Timber.v("JobDao getMonAll.${it}")
@@ -136,7 +136,7 @@ class JobDaoTest: BaseDaoTest() {
         jobDao.getAll()
             .flatMap {
                 it.forEach {
-                    if(it.todo?.dayOfWeek == DayOfWeek.MON.nameOfDay){
+                    if(it.todo?.dayOfWeekNumber == DayOfWeek.MON.valueOfDay){
                         jobDao.delete(it)
                     }
                 }
@@ -155,7 +155,7 @@ class JobDaoTest: BaseDaoTest() {
     @Test
     fun upateMonCompleted() {
         insertAllJob()
-        jobDao.getAll(DayOfWeek.MON.nameOfDay)
+        jobDao.getAll(DayOfWeek.MON.valueOfDay)
             .flatMap{
                 it.forEach {
                     it.completed = true

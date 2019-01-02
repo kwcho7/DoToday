@@ -5,7 +5,6 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import kr.co.cools.today.TodayApplication
-import kr.co.cools.today.repo.TodayRepository
 import kr.co.cools.today.repo.TodayRoomDatabase
 import kr.co.cools.today.repo.dao.JobDao
 import kr.co.cools.today.repo.dao.TodoDao
@@ -17,12 +16,6 @@ class TodayAppModule {
     @Provides
     fun context(application: TodayApplication): Context {
         return application.applicationContext
-    }
-
-    @Singleton
-    @Provides
-    fun todayRepository(context: Context, todoDao: TodoDao, jobDao: JobDao): TodayRepository {
-        return TodayRepository(context, todoDao, jobDao)
     }
 
     @Singleton

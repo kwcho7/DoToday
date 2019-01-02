@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">DoIt</string>
+    <string name="monday">월요일</string>
+    <string name="tuesday">화요일</string>
+    <string name="wednesday">수요일</string>
+    <string name="thusday">목요일</string>
+    <string name="friday">금요일</string>
+    <string name="saturday">토요일</string>
+    <string name="sunday">일요일</string>
+    <string name="todo_list_empty">할일 목록이 없습니다.\n오른쪽 아래 `+` 를 눌러 추가해보세요</string>
+    <string name="register_todo_title">제 목을 입력하세요</string>
+    <string name="register_todo_desc">할일을 자세히 기록해 보세요</string>
+    <string name="register_todo_completed">완료</string>
+
+
 </resources>

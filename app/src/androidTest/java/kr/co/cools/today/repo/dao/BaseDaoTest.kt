@@ -7,7 +7,6 @@ import dagger.Module
 import dagger.Provides
 import kr.co.cools.today.TodayApplication
 import kr.co.cools.today.di.TodayAppModule
-import kr.co.cools.today.repo.TodayRepository
 import org.junit.Before
 import javax.inject.Singleton
 
@@ -17,7 +16,6 @@ import javax.inject.Singleton
     modules = [ApplicationModule::class, TodayAppModule::class]
 )
 interface RepoComponent {
-    fun repo() : TodayRepository
     fun todoDao() : TodoDao
     fun jobDao(): JobDao
 }
@@ -34,7 +32,6 @@ class ApplicationModule(val context: Context) {
 
 abstract class BaseDaoTest {
     lateinit var component: RepoComponent
-    lateinit var repo: TodayRepository
 
     abstract fun moduleSetup(component: RepoComponent)
 
@@ -45,7 +42,6 @@ abstract class BaseDaoTest {
             .todayAppModule(TodayAppModule())
             .applicationModule(ApplicationModule(context))
             .build()
-        repo = component.repo()
         moduleSetup(component)
     }
 }

@@ -10,7 +10,10 @@ import kotlinx.android.synthetic.main.activity_launcher.*
 import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
-import kr.co.cools.today.ui.register.job.RegisterJobActivity
+import kr.co.cools.today.ui.job.register.RegisterJobActivity
+import kr.co.cools.today.ui.todo.list.TodoListActivity
+import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
+import kr.co.cools.today.ui.todo.register.RegisterTodoViewModel
 import javax.inject.Inject
 
 class LauncherActivity : DaggerAppCompatActivity() {
@@ -45,11 +48,11 @@ class LauncherActivity : DaggerAppCompatActivity() {
                     is LauncherViewModel.LauncherState.HideProgress -> {
                         progressBar.gone()
                     }
-                    is LauncherViewModel.LauncherState.StartTodoActivity -> {
-
+                    is LauncherViewModel.LauncherState.StartTodoListActivity -> {
+                        startActivity(Intent(this@LauncherActivity, TodoListActivity::class.java))
                     }
                     is LauncherViewModel.LauncherState.StartRegisterJobActivity -> {
-                        startActivity(Intent(this@LauncherActivity, RegisterJobActivity::class.java))
+                        startActivity(Intent(this@LauncherActivity, RegisterTodoActivity::class.java))
                     }
                 }
             }

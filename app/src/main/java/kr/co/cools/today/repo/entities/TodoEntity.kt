@@ -8,19 +8,20 @@ import android.arch.persistence.room.PrimaryKey
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true) var todoIndex: Int = 0,
     /**
-     * [DayOfWeek] - 월,화,수,목,금,토,일
+     * [DayOfWeek] - 0-월, 1-화, 2-수, 3-목, 4-금, 5-토, 6-일
      */
-    @ColumnInfo(name = "dayOfWeek") var dayOfWeek: String = "",
+    @ColumnInfo(name = "dayOfWeekNumber") var dayOfWeekNumber: Int = 0,
     @ColumnInfo(name = "title") var title: String = "",
+    @ColumnInfo(name = "description") var description: String = "",
     @ColumnInfo(name = "point") var point: Int = 0
 )
 
-enum class DayOfWeek(val nameOfDay: String) {
-    MON("월"),
-    TUE("화"),
-    WED("수"),
-    THU("목"),
-    FRI("금"),
-    SAT("토"),
-    SUN("일")
+enum class DayOfWeek(val valueOfDay: Int) {
+    MON(0),
+    TUE(1),
+    WED(2),
+    THU(3),
+    FRI(4),
+    SAT(5),
+    SUN(6)
 }

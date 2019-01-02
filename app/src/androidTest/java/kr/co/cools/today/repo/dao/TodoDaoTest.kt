@@ -20,8 +20,9 @@ class TodoDaoTest: BaseDaoTest() {
     @Test
     fun insertOne() {
         val todo = TodoEntity().apply {
-            dayOfWeek = DayOfWeek.MON.nameOfDay
+            dayOfWeekNumber = 0
             title = "job 1"
+            description = "job 1 description"
             point = 100
         }
         val result = todoDao.insert(todo)
@@ -31,19 +32,41 @@ class TodoDaoTest: BaseDaoTest() {
     @Test
     fun insertTwo() {
         val todo = TodoEntity().apply {
-            dayOfWeek = DayOfWeek.MON.nameOfDay
+            dayOfWeekNumber = 1
             title = "job 1"
             point = 100
         }
 
         val todo1 = TodoEntity().apply {
-            dayOfWeek = DayOfWeek.TUE.nameOfDay
+            dayOfWeekNumber = 2
             title = "job 2"
             point = 100
         }
 
         val result = todoDao.insert(todo, todo1)
         Assert.assertEquals(2, result.size)
+    }
+
+    @Test
+    fun insertMany() {
+        insertTodo(DayOfWeek.MON, 10)
+        insertTodo(DayOfWeek.TUE, 10)
+        insertTodo(DayOfWeek.WED, 10)
+        insertTodo(DayOfWeek.THU, 10)
+        insertTodo(DayOfWeek.SAT, 10)
+        insertTodo(DayOfWeek.SUN, 10)
+    }
+
+    private fun insertTodo(_dayOfWeek: DayOfWeek, count: Int){
+        for(i in 0.. count){
+            val todo = TodoEntity().apply {
+                dayOfWeekNumber = _dayOfWeek.valueOfDay
+                title = "${_dayOfWeek.valueOfDay} job $i"
+                description = "${_dayOfWeek.valueOfDay} job $i description"
+                point = 100
+            }
+            val result = todoDao.insert(todo)
+        }
     }
 
     @Test
@@ -82,7 +105,7 @@ class TodoDaoTest: BaseDaoTest() {
     @Test
     fun getMonTodos() {
         insertTwo()
-        todoDao.getAll(DayOfWeek.MON.nameOfDay).subscribe(
+        todoDao.getAll(DayOfWeek.MON.valueOfDay).subscribe(
             {
                 Assert.assertEquals(1, it.size)
             },

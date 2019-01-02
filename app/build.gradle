@@ -79,7 +79,9 @@ dependencies {
     implementation 'com.google.guava:guava:26.0-android'
 
     //
-    implementation 'kr.co.cools.core:common:0.0.3'
+    implementation 'kr.co.cools.core:common:0.0.4'
+
+    implementation 'kr.co.cools.ui:design:0.0.1'
 }
 
 // dagger

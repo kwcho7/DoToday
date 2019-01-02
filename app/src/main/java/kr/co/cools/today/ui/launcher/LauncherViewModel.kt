@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.util.Log
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
@@ -22,21 +23,21 @@ class LauncherViewModel @Inject constructor(val context: Context, val interactor
      * [#launcherState] 을 observe 하여 변경될때 UI 를 업데이트 시켜줘야한다.
      */
     fun updateLauncherState() {
-        launcherState.postValue(LauncherState.ShowProgress)
-        interactor.hasJobEntity()
-            .delay(2000, TimeUnit.MILLISECONDS)
+        launcherState.value = LauncherState.ShowProgress
+        interactor.hasTodoEntity()
+            .delay(20, TimeUnit.MILLISECONDS)
             .asDriver()
             .subscribe(
                 {
                     launcherState.value = LauncherState.HideProgress
-                    if(it){
-                        launcherState.value =
-                                LauncherState.StartTodoActivity
-                    }
-                    else {
-                        launcherState.value =
-                                LauncherState.StartRegisterJobActivity
-                    }
+                    launcherState.value = LauncherState.StartRegisterJobActivity
+
+//                    if(it){
+//                        launcherState.value = LauncherState.StartRegisterJobActivity
+//                    }
+//                    else {
+//                        launcherState.value = LauncherState.StartTodoListActivity
+//                    }
                 },
                 {
                     launcherState.value = LauncherState.HideProgress
@@ -71,7 +72,7 @@ class LauncherViewModel @Inject constructor(val context: Context, val interactor
         /**
          * 오늘 할일 Activity 를 실행한다.
          */
-        object StartTodoActivity: LauncherState()
+        object StartTodoListActivity: LauncherState()
 
         /**
          * 할일 등록 Activity 를 실행한다.
