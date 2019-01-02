@@ -11,10 +11,7 @@ import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
 import kr.co.cools.today.ui.job.list.JobListActivity
-import kr.co.cools.today.ui.job.register.RegisterJobActivity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
-import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
-import kr.co.cools.today.ui.todo.register.RegisterTodoViewModel
 import javax.inject.Inject
 
 class LauncherActivity : DaggerAppCompatActivity() {

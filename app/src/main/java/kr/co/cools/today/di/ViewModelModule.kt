@@ -6,7 +6,6 @@ import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
-import kr.co.cools.today.ui.job.register.RegisterJobViewModel
 import kr.co.cools.today.ui.launcher.LauncherViewModel
 import kr.co.cools.today.ui.todo.list.TodoListViewModel
 import kr.co.cools.today.ui.todo.register.RegisterTodoViewModel
@@ -35,13 +34,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RegisterTodoViewModel::class)
     internal abstract fun registerTodoViewModel(viewModel: RegisterTodoViewModel): ViewModel
-
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(RegisterJobViewModel::class)
-    internal abstract fun registerJobViewModel(viewModel: RegisterJobViewModel): ViewModel
-
 }
 
 
