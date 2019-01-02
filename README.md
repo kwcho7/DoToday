@@ -4,4 +4,4 @@
 
 Dagger2, Room, LiveData, ViewModel, RxJava, Retrofit
 
-ViewModel, View, Entity, Interactor, Repository
+ViewModel, View, Entity, Interactor
