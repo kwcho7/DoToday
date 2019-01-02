@@ -11,6 +11,7 @@
     <string name="register_todo_title">제 목을 입력하세요</string>
     <string name="register_todo_desc">할일을 자세히 기록해 보세요</string>
     <string name="register_todo_completed">완료</string>
+    <string name="register_todo_empty_title">제목을 입력하세요.</string>
 
 
 </resources>

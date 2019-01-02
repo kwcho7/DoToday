@@ -2,6 +2,7 @@ package kr.co.cools.today.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import kr.co.cools.today.ui.job.list.JobListActivity
 import kr.co.cools.today.ui.launcher.LauncherActivity
 import kr.co.cools.today.ui.job.register.RegisterJobActivity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
@@ -19,6 +20,8 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract fun registerTodoActivity(): RegisterTodoActivity
 
+    @ContributesAndroidInjector
+    abstract fun jobListActivity(): JobListActivity
 
     @ContributesAndroidInjector
     abstract fun registerJobActivity(): RegisterJobActivity

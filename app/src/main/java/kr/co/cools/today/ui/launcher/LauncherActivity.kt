@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_launcher.*
 import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
+import kr.co.cools.today.ui.job.list.JobListActivity
 import kr.co.cools.today.ui.job.register.RegisterJobActivity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
 import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
@@ -51,8 +52,8 @@ class LauncherActivity : DaggerAppCompatActivity() {
                     is LauncherViewModel.LauncherState.StartTodoListActivity -> {
                         startActivity(Intent(this@LauncherActivity, TodoListActivity::class.java))
                     }
-                    is LauncherViewModel.LauncherState.StartRegisterJobActivity -> {
-                        startActivity(Intent(this@LauncherActivity, RegisterTodoActivity::class.java))
+                    is LauncherViewModel.LauncherState.StartJobListActivity -> {
+                        startActivity(Intent(this@LauncherActivity, JobListActivity::class.java))
                     }
                 }
             }

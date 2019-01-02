@@ -13,6 +13,7 @@
     >
         <activity android:name=".ui.launcher.LauncherActivity"
                   android:screenOrientation="portrait"
+                  android:noHistory="true"
         >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -30,6 +31,10 @@
         />
 
         <activity android:name=".ui.todo.register.RegisterTodoActivity"
+                  android:screenOrientation="portrait"
+        />
+
+        <activity android:name=".ui.job.list.JobListActivity"
                   android:screenOrientation="portrait"
         />
     </application>

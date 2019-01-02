@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class LauncherInteractor @Inject constructor(val context: Context, var todoDao: TodoDao) {
 
-
     fun hasTodoEntity(): Single<Boolean> {
         return todoDao.getAll()
             .flatMap {

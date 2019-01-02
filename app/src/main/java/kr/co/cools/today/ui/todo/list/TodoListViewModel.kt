@@ -13,7 +13,6 @@ class TodoListViewModel @Inject constructor(val interactor: TodoListInteractor):
     override fun dispatch(action: ViewModelAction) {
     }
 
-
     override fun observer(lifecycleOwner: LifecycleOwner, observer: Observer<TodoListViewModelState>) {
         super.observer(lifecycleOwner, observer)
         todoListLivedata.observe(lifecycleOwner, Observer {

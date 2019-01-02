@@ -1,4 +1,6 @@
 package kr.co.cools.today.ui.job.list
 
-class JobListActivity {
+import dagger.android.support.DaggerAppCompatActivity
+
+class JobListActivity: DaggerAppCompatActivity() {
 }

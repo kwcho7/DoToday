@@ -13,7 +13,7 @@ data class TodoEntity(
     @ColumnInfo(name = "dayOfWeekNumber") var dayOfWeekNumber: Int = 0,
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "description") var description: String = "",
-    @ColumnInfo(name = "point") var point: Int = 0
+    @ColumnInfo(name = "point") var point: Int = 100
 )
 
 enum class DayOfWeek(val valueOfDay: Int) {

@@ -30,14 +30,11 @@ class LauncherViewModel @Inject constructor(val context: Context, val interactor
             .subscribe(
                 {
                     launcherState.value = LauncherState.HideProgress
-                    launcherState.value = LauncherState.StartRegisterJobActivity
-
-//                    if(it){
-//                        launcherState.value = LauncherState.StartRegisterJobActivity
-//                    }
-//                    else {
-//                        launcherState.value = LauncherState.StartTodoListActivity
-//                    }
+                    if(it){
+                        launcherState.value = LauncherState.StartJobListActivity
+                    }else {
+                        launcherState.value = LauncherState.StartTodoListActivity
+                    }
                 },
                 {
                     launcherState.value = LauncherState.HideProgress
@@ -70,14 +67,14 @@ class LauncherViewModel @Inject constructor(val context: Context, val interactor
         object HideProgress: LauncherState()
 
         /**
-         * 오늘 할일 Activity 를 실행한다.
+         *
          */
         object StartTodoListActivity: LauncherState()
 
         /**
-         * 할일 등록 Activity 를 실행한다.
+         *
          */
-        object StartRegisterJobActivity: LauncherState()
+        object StartJobListActivity: LauncherState()
 
         /**
          * 오류 발생시 메세지를 보여준다.
