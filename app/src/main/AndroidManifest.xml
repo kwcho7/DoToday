@@ -22,10 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.job.register.RegisterJobActivity"
-                  android:screenOrientation="portrait"
-        />
-
         <activity android:name=".ui.todo.list.TodoListActivity"
                   android:screenOrientation="portrait"
         />
@@ -37,6 +33,8 @@
         <activity android:name=".ui.job.list.JobListActivity"
                   android:screenOrientation="portrait"
         />
+
+        <service android:name=".service.JobRegisterService" />s
     </application>
 
 </manifest>

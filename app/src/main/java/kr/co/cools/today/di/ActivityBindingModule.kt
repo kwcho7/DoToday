@@ -2,6 +2,7 @@ package kr.co.cools.today.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import kr.co.cools.today.service.JobRegisterService
 import kr.co.cools.today.ui.job.list.JobListActivity
 import kr.co.cools.today.ui.launcher.LauncherActivity
 import kr.co.cools.today.ui.todo.list.TodoListActivity

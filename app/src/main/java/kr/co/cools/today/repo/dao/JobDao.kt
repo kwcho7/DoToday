@@ -17,6 +17,9 @@ interface JobDao{
     @Query("SELECT * FROM jobentity WHERE dayOfWeekNumber IN (:dayOfWeek)")
     fun getAll(dayOfWeek: Int) : Single<List<JobEntity>>
 
+    @Query("SELECT * FROM jobentity WHERE date IN (:date)")
+    fun getAll(date: String) : Single<List<JobEntity>>
+
     @Insert
     fun insert(vararg jobTodo: JobEntity): LongArray
 
