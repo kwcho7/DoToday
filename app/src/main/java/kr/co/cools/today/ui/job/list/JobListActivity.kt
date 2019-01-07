@@ -5,12 +5,14 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_joblist.*
 import kotlinx.android.synthetic.main.item_job_content.view.*
 import kotlinx.android.synthetic.main.item_job_header.view.*
+import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.R
 import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.repo.entities.JobEntity
@@ -28,6 +30,8 @@ class JobListActivity: DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_joblist)
+
+        setSupportActionBar(toolBar)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(JobListViewModel::class.java)
         initRecyclerView()
@@ -51,6 +55,9 @@ class JobListActivity: DaggerAppCompatActivity() {
                     }
                     notifyDataSetChanged()
                 }
+            }
+            is JobListViewModel.JobListViewState.UpdateDayOfWeek -> {
+                supportActionBar?.title = viewState.dayOfWeek
             }
         }
     }

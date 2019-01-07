@@ -27,11 +27,7 @@ class TodayApplication: DaggerApplication(), TodayContext{
     override fun onCreate() {
         super.onCreate()
         Logger.init(BuildConfig.DEBUG, "DoIt")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(Intent(this, JobRegisterService::class.java))
-        } else {
-            startService(Intent(this, JobRegisterService::class.java))
-        }
+        startService(Intent(this, JobRegisterService::class.java))
     }
 
     override fun jobDao(): JobDao {

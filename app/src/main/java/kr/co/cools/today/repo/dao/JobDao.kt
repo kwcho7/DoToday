@@ -13,6 +13,9 @@ interface JobDao{
     @Query("SELECT * FROM jobentity")
     fun getAllLiveData() : LiveData<List<JobEntity>>
 
+    @Query("SELECT * FROM jobentity WHERE date IN (:date)")
+    fun getAllLiveData(date: String) : LiveData<List<JobEntity>>
+
 
     @Query("SELECT * FROM jobentity WHERE dayOfWeekNumber IN (:dayOfWeek)")
     fun getAll(dayOfWeek: Int) : Single<List<JobEntity>>
