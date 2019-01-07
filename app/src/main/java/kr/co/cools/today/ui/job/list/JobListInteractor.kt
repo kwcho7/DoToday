@@ -12,4 +12,9 @@ class JobListInteractor @Inject constructor(private val jobDao: JobDao) {
     fun getTodayJobAllLive(completed: Boolean): LiveData<List<JobEntity>> {
         return jobDao.getAllLiveData(DateUtils.getCurrentDate(), completed)
     }
+
+    fun updateComplete(jobEntity: JobEntity) {
+        jobEntity.completed = true
+        jobDao.update(jobEntity)
+    }
 }

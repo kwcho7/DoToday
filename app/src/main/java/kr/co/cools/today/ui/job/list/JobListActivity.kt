@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.support.v7.widget.helper.ItemTouchUIUtil
 import android.view.*
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_joblist.*
 import kotlinx.android.synthetic.main.item_job_content.view.*
 import kotlinx.android.synthetic.main.item_job_header.view.*
+import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.R
 import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.repo.entities.JobEntity
@@ -59,7 +62,6 @@ class JobListActivity: DaggerAppCompatActivity() {
             true
         }
     }
-
 
     override fun onBackPressed() {
         if(drawableLayout.isDrawerOpen(Gravity.LEFT)){
@@ -125,6 +127,30 @@ class JobListActivity: DaggerAppCompatActivity() {
             adapter = jobListAdapter
             layoutManager = LinearLayoutManager(this@JobListActivity, LinearLayoutManager.VERTICAL, false)
         }
+
+        val helper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
+            override fun getMovementFlags(p0: RecyclerView, p1: RecyclerView.ViewHolder): Int {
+                if(jobRecyclerView.adapter == jobListAdapter){
+                    return makeMovementFlags(0, ItemTouchHelper.RIGHT)
+                }
+                return makeMovementFlags(0, 0)
+            }
+
+            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
+                if(jobRecyclerView.adapter == jobListAdapter){
+                    val baseItem = (jobRecyclerView.adapter as JobAdapter).itemList.get(p0.adapterPosition)
+                    if(baseItem is JobItem){
+                        viewModel.updateCompleteJob(baseItem.jobEntity)
+                    }
+                }
+            }
+        })
+
+        helper.attachToRecyclerView(jobRecyclerView)
     }
 
     private val tabSelectListener = object:TabLayout.OnTabSelectedListener{

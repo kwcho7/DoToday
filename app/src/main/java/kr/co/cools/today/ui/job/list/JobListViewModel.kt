@@ -16,7 +16,7 @@ import kr.co.cools.today.ui.utils.WeekNumber
 import java.util.*
 import javax.inject.Inject
 
-class JobListViewModel @Inject constructor(private val todayContext: TodayContext, interactor: JobListInteractor): BaseViewModel<JobListViewModel.JobListViewState>() {
+class JobListViewModel @Inject constructor(private val todayContext: TodayContext, val interactor: JobListInteractor): BaseViewModel<JobListViewModel.JobListViewState>() {
     private val compositeDisposable = CompositeDisposable()
 
     private val jobList = interactor.getTodayJobAllLive(false)
@@ -55,6 +55,17 @@ class JobListViewModel @Inject constructor(private val todayContext: TodayContex
 
     override fun dispatch(action: ViewModelAction) {
 
+    }
+
+    fun updateCompleteJob(jobEntity: JobEntity) {
+        Single.create<Boolean> {
+            interactor.updateComplete(jobEntity)
+            it.onSuccess(true)
+        }
+        .asDriver()
+        .doOnSuccess {  }
+        .subscribe()
+            .disposableBag(compositeDisposable)
     }
 
     sealed class JobDispatch: ViewModelAction{
