@@ -8,10 +8,11 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
+import kr.co.cools.today.TodayContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LauncherViewModel @Inject constructor(val context: Context, val interactor: LauncherInteractor): ViewModel() {
+class LauncherViewModel @Inject constructor(val interactor: LauncherInteractor): ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     val launcherState = MutableLiveData<LauncherState>().apply {

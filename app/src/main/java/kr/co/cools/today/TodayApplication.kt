@@ -2,7 +2,6 @@ package kr.co.cools.today
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import kr.co.cools.common.logger.Logger
@@ -38,6 +37,9 @@ class TodayApplication: DaggerApplication(), TodayContext{
         return todoDao
     }
 
+    override fun getContext(): Context {
+        return this
+    }
 }
 
 fun Context.todayContext() : TodayContext {
@@ -47,4 +49,5 @@ fun Context.todayContext() : TodayContext {
 interface TodayContext{
     fun jobDao(): JobDao
     fun todoDao(): TodoDao
+    fun getContext(): Context
 }

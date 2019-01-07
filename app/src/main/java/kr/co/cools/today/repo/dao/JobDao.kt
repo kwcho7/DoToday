@@ -16,12 +16,18 @@ interface JobDao{
     @Query("SELECT * FROM jobentity WHERE date IN (:date)")
     fun getAllLiveData(date: String) : LiveData<List<JobEntity>>
 
+    @Query("SELECT * FROM jobentity WHERE date IN (:date) AND completed IN (:completed)")
+    fun getAllLiveData(date: String, completed: Boolean) : LiveData<List<JobEntity>>
+
 
     @Query("SELECT * FROM jobentity WHERE dayOfWeekNumber IN (:dayOfWeek)")
     fun getAll(dayOfWeek: Int) : Single<List<JobEntity>>
 
     @Query("SELECT * FROM jobentity WHERE date IN (:date)")
     fun getAll(date: String) : Single<List<JobEntity>>
+
+    @Query("SELECT * FROM jobentity WHERE date IN (:date) AND completed IN (:completed)")
+    fun getAll(date: String, completed: Boolean) : Single<List<JobEntity>>
 
     @Insert
     fun insert(vararg jobTodo: JobEntity): LongArray
