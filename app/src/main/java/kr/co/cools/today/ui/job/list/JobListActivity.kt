@@ -19,6 +19,7 @@ import kr.co.cools.today.R
 import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
+import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
 import kr.co.cools.today.ui.utils.WeekNumber
 import javax.inject.Inject
 
@@ -41,6 +42,13 @@ class JobListActivity: DaggerAppCompatActivity() {
         initRecyclerView()
         initOvserver()
         initTabLayout()
+        initFloatingButton()
+    }
+
+    private fun initFloatingButton() {
+        floatingActionButton.setOnClickListener {
+            startActivity(RegisterTodoActivity.forIntent(this, WeekNumber.getNumber()))
+        }
     }
 
     private fun initTabLayout() {
@@ -163,10 +171,12 @@ class JobListActivity: DaggerAppCompatActivity() {
         override fun onTabSelected(p0: TabLayout.Tab?) {
             p0?.let {
                 if(it.position == 0){
+                    floatingActionButton.show()
                     jobRecyclerView.adapter = jobListAdapter
                     jobRecyclerView.adapter?.notifyDataSetChanged()
                 }
                 else {
+                    floatingActionButton.hide()
                     jobRecyclerView.adapter = jobDoneListAdapter
                     jobRecyclerView.adapter?.notifyDataSetChanged()
                 }

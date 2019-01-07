@@ -3,7 +3,9 @@ package kr.co.cools.today.ui.todo.register
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Range
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +18,21 @@ import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
 import kr.co.cools.today.di.ViewModelFactory
-import kr.co.cools.today.repo.entities.DayOfWeek
-import kr.co.cools.today.repo.entities.TodoEntity
 import kr.co.cools.today.ui.utils.WeekNumber
 import javax.inject.Inject
 
 class RegisterTodoActivity: DaggerAppCompatActivity() {
+
+    companion object {
+        private val EXTRA_KEY_DAY_OF_WEEK = "extra_key_day_of_week"
+
+        fun forIntent(context: Context, dayOfWeek: Int): Intent {
+            return Intent(context, RegisterTodoActivity::class.java).apply {
+                putExtra(EXTRA_KEY_DAY_OF_WEEK , dayOfWeek)
+            }
+        }
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -30,8 +41,11 @@ class RegisterTodoActivity: DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_todo)
+
+        val dayOfWeek = intent.getIntExtra(EXTRA_KEY_DAY_OF_WEEK, -1)
+
         initViewModel()
-        initDayOfWeekSpinner()
+        initDayOfWeekSpinner(dayOfWeek)
         initButtonAction()
     }
 
@@ -67,8 +81,11 @@ class RegisterTodoActivity: DaggerAppCompatActivity() {
         Toast.makeText(this, getString(R.string.register_todo_empty_title), Toast.LENGTH_SHORT).show()
     }
 
-    private fun initDayOfWeekSpinner() {
+    private fun initDayOfWeekSpinner(dayOfWeek: Int) {
         spinner.adapter = WeekSpinnerAdapter(this@RegisterTodoActivity)
+        if(Range(0, 6).contains(dayOfWeek)){
+            spinner.setSelection(dayOfWeek)
+        }
     }
 
     private fun initButtonAction() {
