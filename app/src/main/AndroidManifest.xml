@@ -34,7 +34,7 @@
                   android:screenOrientation="portrait"
         />
 
-        <service android:name=".service.JobRegisterService" />s
+        <service android:name=".service.JobRegisterService"/>
     </application>
 
 </manifest>
