@@ -1,7 +1,7 @@
 package kr.co.cools.today.repo.dao
 
 import android.content.Context
-import android.support.test.InstrumentationRegistry
+import androidx.test.InstrumentationRegistry
 import dagger.Component
 import dagger.Module
 import dagger.Provides

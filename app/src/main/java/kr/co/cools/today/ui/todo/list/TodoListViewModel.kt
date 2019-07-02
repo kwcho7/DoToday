@@ -1,7 +1,7 @@
 package kr.co.cools.today.ui.todo.list
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import kr.co.cools.today.repo.entities.TodoEntity
 import kr.co.cools.today.ui.BaseViewModel
 import javax.inject.Inject

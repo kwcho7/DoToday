@@ -1,6 +1,6 @@
 package kr.co.cools.today.ui.job.list
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import io.reactivex.Single
 import kr.co.cools.today.repo.dao.JobDao
 import kr.co.cools.today.repo.entities.JobEntity

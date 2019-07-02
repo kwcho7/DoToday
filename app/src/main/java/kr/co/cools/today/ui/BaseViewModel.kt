@@ -1,6 +1,6 @@
 package kr.co.cools.today.ui
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 
 abstract class BaseViewModel<T: BaseViewModel.ViewModelState>: ViewModel() {
 

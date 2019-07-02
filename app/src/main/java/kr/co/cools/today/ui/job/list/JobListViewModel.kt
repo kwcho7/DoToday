@@ -1,7 +1,7 @@
 package kr.co.cools.today.ui.job.list
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import android.content.Context
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable

@@ -1,12 +1,12 @@
 package kr.co.cools.today.ui.todo.list
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +56,11 @@ class TodoListActivity: DaggerAppCompatActivity() {
     private fun initRecyclerView() {
         todoRecyclerView.apply {
             adapter = TodoAdapter(listOf())
-            layoutManager = LinearLayoutManager(this@TodoListActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                this@TodoListActivity,
+                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                false
+            )
             addItemDecoration(headerDecoration)
         }
     }
@@ -87,7 +91,7 @@ class TodoListActivity: DaggerAppCompatActivity() {
         }
     }
 
-    abstract class TodoViewHolder<T: TodoListViewModel.TodoModel>(val view: View): RecyclerView.ViewHolder(view) {
+    abstract class TodoViewHolder<T: TodoListViewModel.TodoModel>(val view: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         abstract fun bind(todoModel: T)
     }
 
@@ -104,7 +108,7 @@ class TodoListActivity: DaggerAppCompatActivity() {
         }
     }
 
-    inner class TodoAdapter(var todoList: List<TodoListViewModel.TodoModel>): RecyclerView.Adapter<TodoViewHolder<*>>(){
+    inner class TodoAdapter(var todoList: List<TodoListViewModel.TodoModel>): androidx.recyclerview.widget.RecyclerView.Adapter<TodoViewHolder<*>>(){
         override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TodoViewHolder<*> {
             when(p1){
                 TodoListViewModel.TodoModel.TYPE_HEADER -> {
@@ -141,16 +145,16 @@ class TodoListActivity: DaggerAppCompatActivity() {
     private val headerDecoration = object: HeaderDecoration() {
         override fun createHeaderViewHolder(
             context: Context,
-            parent: RecyclerView,
+            parent: androidx.recyclerview.widget.RecyclerView,
             position: Int
-        ): RecyclerView.ViewHolder {
+        ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
             val viewGroup = LayoutInflater.from(context).inflate(R.layout.item_todo_header, parent, false) as ViewGroup
             return TodoHeaderViewHolder(viewGroup).apply {
                 bind((parent.adapter as TodoAdapter).todoList[position] as TodoListViewModel.TodoHeaderModel)
             }
         }
 
-        override fun isHeaderItem(recyclerView: RecyclerView, position: Int): Boolean {
+        override fun isHeaderItem(recyclerView: androidx.recyclerview.widget.RecyclerView, position: Int): Boolean {
             return (recyclerView.adapter as TodoAdapter).todoList[position].getType() == TodoListViewModel.TodoModel.TYPE_HEADER
         }
 

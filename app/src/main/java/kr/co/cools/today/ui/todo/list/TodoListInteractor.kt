@@ -1,6 +1,6 @@
 package kr.co.cools.today.ui.todo.list
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import kr.co.cools.today.repo.dao.TodoDao
 import kr.co.cools.today.repo.entities.TodoEntity
 import javax.inject.Inject

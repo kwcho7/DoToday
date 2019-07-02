@@ -1,6 +1,6 @@
 package kr.co.cools.today.repo.entities
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 
 @Entity

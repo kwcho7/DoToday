@@ -1,14 +1,14 @@
 package kr.co.cools.today.ui.job.list
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.support.v7.widget.helper.ItemTouchUIUtil
+import com.google.android.material.tabs.TabLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchUIUtil
 import android.view.*
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_joblist.*
@@ -133,22 +133,26 @@ class JobListActivity: DaggerAppCompatActivity() {
     private fun initRecyclerView() {
         jobRecyclerView.apply {
             adapter = jobListAdapter
-            layoutManager = LinearLayoutManager(this@JobListActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+                this@JobListActivity,
+                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                false
+            )
         }
 
         val helper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
-            override fun getMovementFlags(p0: RecyclerView, p1: RecyclerView.ViewHolder): Int {
+            override fun getMovementFlags(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
                 if(jobRecyclerView.adapter == jobListAdapter){
                     return makeMovementFlags(0, ItemTouchHelper.RIGHT)
                 }
                 return makeMovementFlags(0, 0)
             }
 
-            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+            override fun onMove(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder, p2: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
-            override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
+            override fun onSwiped(p0: androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
                 if(jobRecyclerView.adapter == jobListAdapter){
                     val baseItem = (jobRecyclerView.adapter as JobAdapter).itemList.get(p0.adapterPosition)
                     if(baseItem is JobItem){
@@ -161,7 +165,7 @@ class JobListActivity: DaggerAppCompatActivity() {
         helper.attachToRecyclerView(jobRecyclerView)
     }
 
-    private val tabSelectListener = object:TabLayout.OnTabSelectedListener{
+    private val tabSelectListener = object: TabLayout.OnTabSelectedListener{
         override fun onTabReselected(p0: TabLayout.Tab?) {
         }
 
@@ -185,7 +189,7 @@ class JobListActivity: DaggerAppCompatActivity() {
 
     }
 
-    abstract class AbstractViewHolder<T>(val viewGroup: ViewGroup): RecyclerView.ViewHolder(viewGroup) {
+    abstract class AbstractViewHolder<T>(val viewGroup: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder(viewGroup) {
         abstract fun bind(item: T)
     }
 
@@ -203,7 +207,7 @@ class JobListActivity: DaggerAppCompatActivity() {
     }
 
 
-    inner class JobAdapter: RecyclerView.Adapter<AbstractViewHolder<*>>() {
+    inner class JobAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<AbstractViewHolder<*>>() {
         val TYPE_HEADER = 0
         val TYPE_JOB = 1
         var itemList = mutableListOf<BaseItem>()

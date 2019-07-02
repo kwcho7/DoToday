@@ -1,6 +1,6 @@
 package kr.co.cools.today.repo.dao
 
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import kr.co.cools.today.repo.entities.DayOfWeek
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.repo.entities.TodoEntity

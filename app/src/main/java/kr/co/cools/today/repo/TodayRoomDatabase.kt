@@ -1,7 +1,7 @@
 package kr.co.cools.today.repo
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import kr.co.cools.today.repo.dao.JobDao
 import kr.co.cools.today.repo.dao.TodoDao
 import kr.co.cools.today.repo.entities.JobEntity
