@@ -9,6 +9,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_launcher.*
 import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
+import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.R
 import kr.co.cools.today.ui.job.list.JobListActivity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
@@ -33,27 +34,29 @@ class LauncherActivity : DaggerAppCompatActivity() {
         viewModel.launcherState.removeObservers(this)
     }
 
-
     inner class LauncherStateObserver: Observer<LauncherViewModel.LauncherState> {
         override fun onChanged(launcherState: LauncherViewModel.LauncherState?) {
-            launcherState?.also { state ->
-                when(state){
-                    is LauncherViewModel.LauncherState.Idle -> {
-                    }
-                    is LauncherViewModel.LauncherState.ShowProgress -> {
-                        progressBar.visible()
-                    }
-                    is LauncherViewModel.LauncherState.HideProgress -> {
-                        progressBar.gone()
-                    }
-                    is LauncherViewModel.LauncherState.StartTodoListActivity -> {
-                        startActivity(Intent(this@LauncherActivity, TodoListActivity::class.java))
-                    }
-                    is LauncherViewModel.LauncherState.StartJobListActivity -> {
-                        startActivity(Intent(this@LauncherActivity, JobListActivity::class.java))
-                    }
+            launcherState?.let { onViewStateChanged(it) }
+        }
+
+        private fun onViewStateChanged(launcherState: LauncherViewModel.LauncherState) =
+            when(launcherState){
+                LauncherViewModel.LauncherState.Idle -> {}
+                LauncherViewModel.LauncherState.ShowProgress -> {
+                    progressBar.visible()
+                }
+                LauncherViewModel.LauncherState.HideProgress -> {
+                    progressBar.gone()
+                }
+                LauncherViewModel.LauncherState.StartTodoListActivity -> {
+                    startActivity(Intent(this@LauncherActivity, TodoListActivity::class.java))
+                }
+                LauncherViewModel.LauncherState.StartJobListActivity -> {
+                    startActivity(Intent(this@LauncherActivity, JobListActivity::class.java))
+                }
+                is LauncherViewModel.LauncherState.ErrorMessage -> {
+                    TODO("not implementation")
                 }
             }
-        }
     }
 }
