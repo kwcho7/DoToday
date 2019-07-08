@@ -12,7 +12,8 @@ import kr.co.cools.today.repo.entities.TodoEntity
         TodoEntity::class,
         JobEntity::class
     ],
-    version = 5
+    version = 5,
+    exportSchema = false
 )
 abstract class TodayRoomDatabase: RoomDatabase() {
     abstract fun todoDao(): TodoDao

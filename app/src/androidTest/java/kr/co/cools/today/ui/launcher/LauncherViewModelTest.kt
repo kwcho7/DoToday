@@ -51,16 +51,17 @@ class LauncherViewModelTest {
     @Test
     fun forwardTodoListIfEmptyTodo() = runBlocking<Unit> {
         Mockito.`when`(todoDao.getAll()).thenReturn(Single.just(emptyList()))
+
+        doReturn(Single.just(false)).`when`(launcherInteractor).hasTodoEntity()
+
         val launcherViewModel = LauncherViewModel(launcherInteractor)
-        CoroutineScope(Dispatchers.Main).launch {
-            launcherViewModel.launcherState.observeForever(observer)
-            launcherViewModel.updateLauncherState()
-        }.join()
+        launcherViewModel.observeForever(observer)
+        launcherViewModel.updateLauncherState()
 
         delay(100)
-        verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.ShowProgress)
-        verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.HideProgress)
-        verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.StartTodoListActivity)
+        verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.ShowProgress)
+        verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.HideProgress)
+        verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.StartTodoListActivity)
     }
 
     // 2. 할일이 정의되어 있으면 할일 목록으로 이동한다.
@@ -69,7 +70,7 @@ class LauncherViewModelTest {
         Mockito.`when`(todoDao.getAll()).thenReturn(Single.just(listOf(TodoEntity())))
         val launcherViewModel = LauncherViewModel(launcherInteractor)
         CoroutineScope(Dispatchers.Main).launch {
-            launcherViewModel.launcherState.observeForever(observer)
+            launcherViewModel.observeForever(observer)
             launcherViewModel.updateLauncherState()
         }.join()
 

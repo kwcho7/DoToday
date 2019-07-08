@@ -4,6 +4,7 @@ import androidx.room.*
 
 
 @Entity
+@SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
 data class JobEntity(
     @PrimaryKey(autoGenerate = true)
     var jobIndex: Int = 0,

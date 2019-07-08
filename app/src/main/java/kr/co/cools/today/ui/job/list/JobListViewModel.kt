@@ -17,34 +17,31 @@ import java.util.*
 import javax.inject.Inject
 
 class JobListViewModel @Inject constructor(private val todayContext: TodayContext, val interactor: JobListInteractor): BaseViewModel<JobListViewModel.JobListViewState>() {
-    private val compositeDisposable = CompositeDisposable()
-
     private val jobList = interactor.getTodayJobAllLive(false)
     private val doneJobList = interactor.getTodayJobAllLive(true)
 
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.clear()
     }
 
     override fun observer(lifecycleOwner: LifecycleOwner, observer: Observer<JobListViewState>) {
         super.observer(lifecycleOwner, observer)
         jobList.observe(lifecycleOwner, Observer {
             it?.let {
-                viewModelState.value = JobListViewState.UpdateJobList(it)
+                notifyChangeViewState(JobListViewState.UpdateJobList(it))
             }
         })
         doneJobList.observe(lifecycleOwner, Observer {
             it?.let {
-                viewModelState.value = JobListViewState.UpdateDoneJobList(it)
+                notifyChangeViewState(JobListViewState.UpdateDoneJobList(it))
             }
         })
         updateDayOfWeek()
     }
 
     private fun updateDayOfWeek() {
-        viewModelState.value = JobListViewState.UpdateDayOfWeek(WeekNumber.getWeekString(todayContext.getContext()))
+        notifyChangeViewState(JobListViewState.UpdateDayOfWeek(WeekNumber.getWeekString(todayContext.getContext())))
     }
 
     override fun removeObservers(lifecycleOwner: LifecycleOwner) {

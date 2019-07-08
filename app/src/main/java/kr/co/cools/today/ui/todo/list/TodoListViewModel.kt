@@ -21,7 +21,7 @@ class TodoListViewModel @Inject constructor(val interactor: TodoListInteractor):
                     onChangedTodoEntityList(this)
                 }
                 else {
-                    viewModelState.value = TodoListViewModelState.EmptyTodoList
+                    notifyChangeViewState(TodoListViewModelState.EmptyTodoList)
                 }
             }
         })
@@ -46,7 +46,7 @@ class TodoListViewModel @Inject constructor(val interactor: TodoListInteractor):
                 TodoModelContent(it)
             )
         }
-        viewModelState.value = TodoListViewModelState.UpdateTodoList(todoModelList)
+        notifyChangeViewState(TodoListViewModelState.UpdateTodoList(todoModelList))
     }
 
     sealed class TodoListViewModelState: BaseViewModel.ViewModelState {

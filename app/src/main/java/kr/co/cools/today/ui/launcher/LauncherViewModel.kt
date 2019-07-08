@@ -1,22 +1,19 @@
 package kr.co.cools.today.ui.launcher
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import android.content.Context
 import android.util.Log
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
-import kr.co.cools.today.TodayContext
+import kr.co.cools.today.ui.BaseViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LauncherViewModel @Inject constructor(val interactor: LauncherInteractor): ViewModel() {
+class LauncherViewModel @Inject constructor(val interactor: LauncherInteractor): BaseViewModel<LauncherViewModel.LauncherState>() {
 
-    private val compositeDisposable = CompositeDisposable()
-    val launcherState = MutableLiveData<LauncherState>().apply {
-        postValue(LauncherState.Idle)
+    init {
+        notifyChangeViewState(LauncherState.Idle)
+    }
+
+    override fun dispatch(action: ViewModelAction) {
     }
 
     /**
@@ -24,34 +21,31 @@ class LauncherViewModel @Inject constructor(val interactor: LauncherInteractor):
      * [#launcherState] 을 observe 하여 변경될때 UI 를 업데이트 시켜줘야한다.
      */
     fun updateLauncherState() {
-        launcherState.value = LauncherState.ShowProgress
+        notifyChangeViewState(LauncherState.ShowProgress)
         interactor.hasTodoEntity()
             .delay(20, TimeUnit.MILLISECONDS)
             .asDriver()
             .subscribe(
                 {
-                    launcherState.value = LauncherState.HideProgress
+                    notifyChangeViewState(LauncherState.HideProgress)
                     if(it){
-                        launcherState.value = LauncherState.StartJobListActivity
+                        notifyChangeViewState(LauncherState.StartJobListActivity)
                     }else {
-                        launcherState.value = LauncherState.StartTodoListActivity
+                        notifyChangeViewState(LauncherState.StartTodoListActivity)
                     }
                 },
                 {
-                    launcherState.value = LauncherState.HideProgress
-                    launcherState.value = LauncherState.ErrorMessage(
-                        Log.getStackTraceString(it)
-                    )
+                    notifyChangeViewState(LauncherState.HideProgress)
+                    notifyChangeViewState(LauncherState.ErrorMessage(Log.getStackTraceString(it)))
                 }
             ).disposableBag(compositeDisposable)
     }
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.clear()
     }
 
-    sealed class LauncherState{
+    sealed class LauncherState: ViewModelState{
         /**
          * 초기 상태
          */
