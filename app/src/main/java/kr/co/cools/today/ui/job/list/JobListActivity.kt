@@ -133,26 +133,26 @@ class JobListActivity: DaggerAppCompatActivity() {
     private fun initRecyclerView() {
         jobRecyclerView.apply {
             adapter = jobListAdapter
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            layoutManager = LinearLayoutManager(
                 this@JobListActivity,
-                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                RecyclerView.VERTICAL,
                 false
             )
         }
 
         val helper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
-            override fun getMovementFlags(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder): Int {
+            override fun getMovementFlags(p0: RecyclerView, p1: RecyclerView.ViewHolder): Int {
                 if(jobRecyclerView.adapter == jobListAdapter){
                     return makeMovementFlags(0, ItemTouchHelper.RIGHT)
                 }
                 return makeMovementFlags(0, 0)
             }
 
-            override fun onMove(p0: androidx.recyclerview.widget.RecyclerView, p1: androidx.recyclerview.widget.RecyclerView.ViewHolder, p2: androidx.recyclerview.widget.RecyclerView.ViewHolder): Boolean {
+            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
-            override fun onSwiped(p0: androidx.recyclerview.widget.RecyclerView.ViewHolder, p1: Int) {
+            override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
                 if(jobRecyclerView.adapter == jobListAdapter){
                     val baseItem = (jobRecyclerView.adapter as JobAdapter).itemList.get(p0.adapterPosition)
                     if(baseItem is JobItem){
@@ -189,7 +189,7 @@ class JobListActivity: DaggerAppCompatActivity() {
 
     }
 
-    abstract class AbstractViewHolder<T>(val viewGroup: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder(viewGroup) {
+    abstract class AbstractViewHolder<T>(val viewGroup: ViewGroup): RecyclerView.ViewHolder(viewGroup) {
         abstract fun bind(item: T)
     }
 

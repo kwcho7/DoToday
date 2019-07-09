@@ -56,9 +56,9 @@ class TodoListActivity: DaggerAppCompatActivity() {
     private fun initRecyclerView() {
         todoRecyclerView.apply {
             adapter = TodoAdapter(listOf())
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(
+            layoutManager = LinearLayoutManager(
                 this@TodoListActivity,
-                androidx.recyclerview.widget.LinearLayoutManager.VERTICAL,
+                RecyclerView.VERTICAL,
                 false
             )
             addItemDecoration(headerDecoration)
