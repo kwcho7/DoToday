@@ -1,22 +1,17 @@
 package kr.co.cools.today.ui.job.list
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import android.content.Context
 import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
-import kr.co.cools.today.TodayApplication
 import kr.co.cools.today.TodayContext
-import kr.co.cools.today.repo.entities.DayOfWeek
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.ui.BaseViewModel
 import kr.co.cools.today.ui.utils.WeekNumber
-import java.util.*
-import javax.inject.Inject
 
-class JobListViewModel @Inject constructor(private val todayContext: TodayContext, val interactor: JobListInteractor): BaseViewModel<JobListViewModel.JobListViewState>() {
+class JobListViewModel @ViewModelInject constructor(private val todayContext: TodayContext, val interactor: JobListInteractor): BaseViewModel<JobListViewModel.JobListViewState>() {
     private val jobList = interactor.getTodayJobAllLive(false)
     private val doneJobList = interactor.getTodayJobAllLive(true)
 

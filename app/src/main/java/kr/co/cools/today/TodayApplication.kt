@@ -1,27 +1,23 @@
 package kr.co.cools.today
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 import kr.co.cools.common.logger.Logger
-import kr.co.cools.today.di.DaggerTodayComponent
 import kr.co.cools.today.repo.dao.JobDao
 import kr.co.cools.today.repo.dao.TodoDao
 import kr.co.cools.today.service.JobRegisterService
 import javax.inject.Inject
 
+@HiltAndroidApp
+class TodayApplication: Application(), TodayContext{
 
-class TodayApplication: DaggerApplication(), TodayContext{
     @Inject
     lateinit var jobDao: JobDao
 
     @Inject
     lateinit var todoDao: TodoDao
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerTodayComponent.builder().create(this)
-    }
 
     override fun onCreate() {
         super.onCreate()

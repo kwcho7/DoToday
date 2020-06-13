@@ -1,13 +1,14 @@
 package kr.co.cools.today.ui.launcher
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
 import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
 import kr.co.cools.today.ui.BaseViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class LauncherViewModel @Inject constructor(val interactor: LauncherInteractor): BaseViewModel<LauncherViewModel.LauncherState>() {
+class LauncherViewModel @ViewModelInject constructor(val interactor: LauncherInteractor): BaseViewModel<LauncherViewModel.LauncherState>() {
 
     init {
         notifyChangeViewState(LauncherState.Idle)

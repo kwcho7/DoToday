@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import androidx.work.*
-import dagger.android.DaggerService
 import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.todayContext
@@ -28,7 +27,7 @@ class JobRegisterService: Service() {
             .build()
 
         WorkManager.getInstance().enqueueUniquePeriodicWork("JOB", ExistingPeriodicWorkPolicy.REPLACE, jobWorker)
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     class JobWorker(val context: Context, params: WorkerParameters): Worker(context, params){

@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -14,6 +16,7 @@ android {
         versionCode Integer.parseInt("$versions.versionCode")
         versionName "$versions.versionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "kr.co.cools.today.CustomTestRunner"
 
     }
     buildTypes {
@@ -33,7 +36,14 @@ android {
     }
 
     testOptions {
-        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
@@ -51,6 +61,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
@@ -75,18 +86,6 @@ dependencies {
 
     implementation 'kr.co.cools.core:common:0.0.4'
     implementation 'kr.co.cools.ui:design:0.0.1'
-}
-
-// dagger
-dependencies{
-    implementation "com.google.dagger:dagger:2.28"
-    kapt "com.google.dagger:dagger-compiler:2.28"
-    implementation "com.google.dagger:dagger-android:2.28"
-    implementation "com.google.dagger:dagger-android-support:2.28"
-    kapt "com.google.dagger:dagger-android-processor:2.28"
-
-    // test kapt
-    kaptAndroidTest "com.google.dagger:dagger-compiler:2.28"
 }
 
 // room
@@ -145,6 +144,8 @@ dependencies {
 dependencies {
     testImplementation 'junit:junit:4.13-beta-3'
 
+    testImplementation 'org.robolectric:robolectric:4.3.1'
+
     // Core library
     androidTestImplementation 'androidx.test:core:1.2.0'
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
@@ -167,14 +168,60 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
     androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.2.0'
 
-    // Mockito
-    testImplementation 'org.mockito:mockito-core:2.28.2'
-    testImplementation 'org.mockito:mockito-inline:2.21.0'
-    androidTestImplementation 'org.mockito:mockito-android:2.28.2'
-    androidTestImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC3'
+
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
     androidTestImplementation 'org.hamcrest:hamcrest-core:1.3'
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
     testImplementation "android.arch.core:core-testing:1.1.1"
+}
+
+// Mockito
+dependencies {
+    testImplementation 'org.robolectric:robolectric:4.2'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
+//    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+//    testImplementation 'org.hamcrest:hamcrest-core:1.3'
+
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.2.0'
+
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0" //Mockito-Kotlin
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
+
+    androidTestImplementation 'org.mockito:mockito-android:3.2.4'
+    androidTestImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+}
+
+
+dependencies {
+    def hilt_version = "2.28-alpha"
+
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Hilt testing dependencies
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+//    // Hilt testing dependencies
+//    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+//    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+}
+
+
+kapt {
+    correctErrorTypes true
+}
+
+hilt {
+    enableTransformForLocalTests = true
+}
+
+dependencies {
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
 }
 

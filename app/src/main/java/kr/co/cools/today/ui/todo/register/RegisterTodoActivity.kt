@@ -1,7 +1,5 @@
 package kr.co.cools.today.ui.todo.register
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,17 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register_todo.*
 import kotlinx.android.synthetic.main.item_spinner_day.view.*
 import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
-import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.ui.utils.WeekNumber
-import javax.inject.Inject
 
-class RegisterTodoActivity: DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class RegisterTodoActivity: AppCompatActivity() {
 
     companion object {
         private val EXTRA_KEY_DAY_OF_WEEK = "extra_key_day_of_week"
@@ -33,10 +33,7 @@ class RegisterTodoActivity: DaggerAppCompatActivity() {
         }
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    lateinit var viewModel: RegisterTodoViewModel
+    private val viewModel: RegisterTodoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +47,6 @@ class RegisterTodoActivity: DaggerAppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RegisterTodoViewModel::class.java)
         viewModel.observer(this, Observer {
             it?.apply {
                 onChangeViewState(this)

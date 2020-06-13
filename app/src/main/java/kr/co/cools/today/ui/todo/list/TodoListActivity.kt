@@ -1,16 +1,17 @@
 package kr.co.cools.today.ui.todo.list
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_todo_list.*
 import kotlinx.android.synthetic.main.item_todo_content.view.*
 import kotlinx.android.synthetic.main.item_todo_header.view.*
@@ -18,16 +19,14 @@ import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.design.deco.HeaderDecoration
 import kr.co.cools.today.R
-import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
 import kr.co.cools.today.ui.utils.WeekNumber
-import javax.inject.Inject
 
-class TodoListActivity: DaggerAppCompatActivity() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+@AndroidEntryPoint
+class TodoListActivity: AppCompatActivity() {
 
-    lateinit var viewModel: TodoListViewModel
+    private val viewModel: TodoListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_list)
@@ -44,7 +43,6 @@ class TodoListActivity: DaggerAppCompatActivity() {
 
     // ViewModel 초기화
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TodoListViewModel::class.java)
         viewModel.observer(this, Observer{
             it?.apply {
                 onViewStateChanged(this)

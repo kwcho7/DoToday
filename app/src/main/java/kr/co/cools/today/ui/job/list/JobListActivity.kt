@@ -1,32 +1,31 @@
 package kr.co.cools.today.ui.job.list
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchUIUtil
-import android.view.*
-import dagger.android.support.DaggerAppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_joblist.*
 import kotlinx.android.synthetic.main.item_job_content.view.*
 import kotlinx.android.synthetic.main.item_job_header.view.*
-import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.R
-import kr.co.cools.today.di.ViewModelFactory
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.ui.todo.list.TodoListActivity
 import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
 import kr.co.cools.today.ui.utils.WeekNumber
 import javax.inject.Inject
 
-class JobListActivity: DaggerAppCompatActivity() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+@AndroidEntryPoint
+class JobListActivity: AppCompatActivity() {
 
     lateinit var viewModel: JobListViewModel
 
@@ -37,7 +36,7 @@ class JobListActivity: DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_joblist)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(JobListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(JobListViewModel::class.java)
         initToolBar()
         initRecyclerView()
         initOvserver()

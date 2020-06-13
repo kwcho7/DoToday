@@ -44,13 +44,13 @@ class LauncherViewModelTest {
 
     @After
     fun tearDown() {
-        Mockito.framework().clearInlineMocks()
+        framework().clearInlineMocks()
     }
 
     // 1. 할일이 정의되지 않았으면 목록 생성으로 이동한다.
     @Test
     fun forwardTodoListIfEmptyTodo() = runBlocking<Unit> {
-        Mockito.`when`(todoDao.getAll()).thenReturn(Single.just(emptyList()))
+        `when`(todoDao.getAll()).thenReturn(Single.just(emptyList()))
 
         doReturn(Single.just(false)).`when`(launcherInteractor).hasTodoEntity()
 
@@ -67,7 +67,7 @@ class LauncherViewModelTest {
     // 2. 할일이 정의되어 있으면 할일 목록으로 이동한다.
     @Test
     fun forwardJobListIfHasTodo() = runBlocking<Unit> {
-        Mockito.`when`(todoDao.getAll()).thenReturn(Single.just(listOf(TodoEntity())))
+        `when`(todoDao.getAll()).thenReturn(Single.just(listOf(TodoEntity())))
         val launcherViewModel = LauncherViewModel(launcherInteractor)
         CoroutineScope(Dispatchers.Main).launch {
             launcherViewModel.observeForever(observer)

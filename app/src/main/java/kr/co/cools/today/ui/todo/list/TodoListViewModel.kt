@@ -1,12 +1,12 @@
 package kr.co.cools.today.ui.todo.list
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import kr.co.cools.today.repo.entities.TodoEntity
 import kr.co.cools.today.ui.BaseViewModel
-import javax.inject.Inject
 
-class TodoListViewModel @Inject constructor(val interactor: TodoListInteractor): BaseViewModel<TodoListViewModel.TodoListViewModelState>() {
+class TodoListViewModel @ViewModelInject constructor(private val interactor: TodoListInteractor): BaseViewModel<TodoListViewModel.TodoListViewModelState>() {
 
     private val todoListLivedata = interactor.getTodoLiveData()
 

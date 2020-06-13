@@ -1,10 +1,10 @@
 package kr.co.cools.today.ui
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import dagger.android.support.DaggerAppCompatActivity
 
-abstract class BaseActivity<VM: BaseViewModel<VS>, VS: BaseViewModel.ViewModelState>: DaggerAppCompatActivity() {
+abstract class BaseActivity<VM: BaseViewModel<VS>, VS: BaseViewModel.ViewModelState>: AppCompatActivity() {
 
     protected lateinit var viewModel: VM
 

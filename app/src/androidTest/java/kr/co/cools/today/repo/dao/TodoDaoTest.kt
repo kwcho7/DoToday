@@ -1,19 +1,27 @@
 package kr.co.cools.today.repo.dao
 
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kr.co.cools.common.logger.Logger
 import kr.co.cools.today.repo.entities.DayOfWeek
 import kr.co.cools.today.repo.entities.TodoEntity
+import kr.co.cools.today.todayContext
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(AndroidJUnit4::class)
-class TodoDaoTest: BaseDaoTest() {
+@RunWith(MockitoJUnitRunner::class)
+class TodoDaoTest {
     lateinit var todoDao:TodoDao
 
-    override fun moduleSetup(component: RepoComponent) {
-        todoDao = component.todoDao()
+    @Before
+    fun setup() {
+        val todayContext = InstrumentationRegistry.getInstrumentation().targetContext.todayContext()
+        todoDao = todayContext.todoDao()
         todoDao.deleteAll()
     }
 
@@ -105,8 +113,10 @@ class TodoDaoTest: BaseDaoTest() {
     @Test
     fun getMonTodos() {
         insertTwo()
-        todoDao.getAll(DayOfWeek.MON.valueOfDay).subscribe(
+
+        todoDao.getAll(DayOfWeek.TUE.valueOfDay).subscribe(
             {
+                Logger.v("it.${it.size}")
                 Assert.assertEquals(1, it.size)
             },
             {

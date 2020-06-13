@@ -1,22 +1,33 @@
 package kr.co.cools.today.repo.dao
 
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kr.co.cools.today.repo.entities.DayOfWeek
 import kr.co.cools.today.repo.entities.JobEntity
 import kr.co.cools.today.repo.entities.TodoEntity
+import kr.co.cools.today.todayContext
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
+import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
-class JobDaoTest: BaseDaoTest() {
+class JobDaoTest{
 
     lateinit var jobDao: JobDao
+
     lateinit var todoDao: TodoDao
 
-    override fun moduleSetup(component: RepoComponent) {
-        jobDao = component.jobDao()
-        todoDao = component.todoDao()
+    @Before
+    fun setup() {
+        val todayContext = InstrumentationRegistry.getInstrumentation().targetContext.todayContext()
+        jobDao = todayContext.jobDao()
+        todoDao = todayContext.todoDao()
+
         jobDao.deleteAll()
         todoDao.deleteAll()
 
@@ -173,3 +184,4 @@ class JobDaoTest: BaseDaoTest() {
             )
     }
 }
+
