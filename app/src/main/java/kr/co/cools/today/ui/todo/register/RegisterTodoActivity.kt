@@ -24,7 +24,7 @@ import kr.co.cools.today.ui.utils.WeekNumber
 class RegisterTodoActivity: AppCompatActivity() {
 
     companion object {
-        private val EXTRA_KEY_DAY_OF_WEEK = "extra_key_day_of_week"
+        val EXTRA_KEY_DAY_OF_WEEK = "extra_key_day_of_week"
 
         fun forIntent(context: Context, dayOfWeek: Int): Intent {
             return Intent(context, RegisterTodoActivity::class.java).apply {
@@ -33,102 +33,8 @@ class RegisterTodoActivity: AppCompatActivity() {
         }
     }
 
-    private val viewModel: RegisterTodoViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_todo)
-
-        val dayOfWeek = intent.getIntExtra(EXTRA_KEY_DAY_OF_WEEK, -1)
-
-        initViewModel()
-        initDayOfWeekSpinner(dayOfWeek)
-        initButtonAction()
-    }
-
-    private fun initViewModel() {
-        viewModel.observer(this, Observer {
-            it?.apply {
-                onChangeViewState(this)
-            }
-        })
-    }
-
-    private fun onChangeViewState(viewState: RegisterTodoViewModel.ViewState) {
-        when(viewState){
-            is RegisterTodoViewModel.ViewState.ProgressViewState -> {
-                if(viewState.isShow){
-                    progressBar2.visible()
-                }
-                else {
-                    progressBar2.gone()
-                }
-            }
-            RegisterTodoViewModel.ViewState.AddCompleteViewState -> {
-                finish()
-            }
-            RegisterTodoViewModel.ViewState.EmptyTitleViewState -> {
-                showEmptyTitleMessage()
-            }
-        }
-    }
-
-    private fun showEmptyTitleMessage() {
-        Toast.makeText(this, getString(R.string.register_todo_empty_title), Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initDayOfWeekSpinner(dayOfWeek: Int) {
-        spinner.adapter = WeekSpinnerAdapter(this@RegisterTodoActivity)
-        if(Range(0, 6).contains(dayOfWeek)){
-            spinner.setSelection(dayOfWeek)
-        }
-    }
-
-    private fun initButtonAction() {
-        completeButton.setOnClickListener {
-            viewModel.dispatch(
-                RegisterTodoViewModel.Action.CompleteAction(titleEditText.text.toString(), descEditText.text.toString(), (spinner.selectedItem as DayOfWeek).number)
-            )
-        }
-    }
-
-
-    data class DayOfWeek(val context: Context, val number: Int, val text: String = WeekNumber.getWeekString(context, number))
-
-    class WeekSpinnerAdapter(val context: Context): BaseAdapter() {
-
-        private val list = listOf(
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.MON.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.TUE.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.WED.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.THU.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.FRI.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.SAT.valueOfDay),
-            DayOfWeek(context, kr.co.cools.today.repo.entities.DayOfWeek.SUN.valueOfDay)
-        )
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val resultView: View
-            if(convertView == null){
-                resultView = LayoutInflater.from(parent!!.context).inflate(R.layout.item_spinner_day, parent, false)
-            }
-            else {
-                resultView = convertView
-            }
-            resultView.titleTextView.text = list[position].text
-            return resultView
-        }
-
-        override fun getItem(position: Int): DayOfWeek {
-            return list[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getCount(): Int {
-            return list.size
-        }
     }
 }
