@@ -3,6 +3,7 @@ package kr.co.cools.today.ui.launcher
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,37 +21,10 @@ import kr.co.cools.today.ui.todo.list.TodoListActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LauncherActivity : BaseActivity<LauncherViewModel, LauncherViewModel.LauncherState>() {
-
-    override fun createViewModel(): LauncherViewModel {
-        return ViewModelProvider(this).get(LauncherViewModel::class.java)
-    }
-
-    @Inject lateinit var injector: LauncherInteractor
+class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
-        viewModel.updateLauncherState()
-    }
-
-    override fun onViewStateChanged(viewState: LauncherViewModel.LauncherState) = when (viewState) {
-        LauncherViewModel.LauncherState.Idle -> {
-        }
-        LauncherViewModel.LauncherState.ShowProgress -> {
-            progressBar.visible()
-        }
-        LauncherViewModel.LauncherState.HideProgress -> {
-            progressBar.gone()
-        }
-        LauncherViewModel.LauncherState.StartTodoListActivity -> {
-            startActivity(Intent(this@LauncherActivity, TodoListActivity::class.java))
-        }
-        LauncherViewModel.LauncherState.StartJobListActivity -> {
-            startActivity(Intent(this@LauncherActivity, JobListActivity::class.java))
-        }
-        is LauncherViewModel.LauncherState.ErrorMessage -> {
-            TODO("not implementation")
-        }
     }
 }
