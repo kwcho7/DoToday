@@ -8,14 +8,15 @@
     <string name="saturday">토요일</string>
     <string name="sunday">일요일</string>
     <string name="todo_list_empty">할일 목록이 없습니다.\n오른쪽 아래 `+` 를 눌러 추가해보세요</string>
-    <string name="register_todo_title">제 목을 입력하세요</string>
+    <string name="register_todo_title">제목을 입력하세요</string>
     <string name="register_todo_desc">할일을 자세히 기록해 보세요</string>
     <string name="register_todo_completed">완료</string>
     <string name="register_todo_empty_title">제목을 입력하세요.</string>
-    <string name="manage_jog">관리</string>
+    <string name="manage_jog">할일 관리</string>
     <string name="setting">설정</string>
     <string name="today_job">할일</string>
     <string name="today_done_job">완료</string>
-
-
+    <string name="todo_of_day">요일 별 할일</string>
+    <string name="register_todo">할일 만들기</string>
+    <string name="empty_job">"오늘 할일이 없습니다. "</string>
 </resources>

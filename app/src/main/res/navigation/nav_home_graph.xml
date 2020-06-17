@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:startDestination="@id/job_list_fragment">
+
+    <fragment
+            android:id="@+id/todo_list_fragment"
+            android:name="kr.co.cools.today.ui.todo.list.TodoListFragment"
+            android:label="TodoListFragment"
+            tools:layout="@layout/fragment_todo_list"
+            >
+        <action
+                android:id="@+id/action_todoListFragment2_to_registerTodoFragment2"
+                app:destination="@id/register_todo_fragment"
+                />
+    </fragment>
+    <fragment
+            android:id="@+id/job_list_fragment"
+            android:name="kr.co.cools.today.ui.job.list.JobListFragment"
+            android:label="@string/today_job"
+            tools:layout="@layout/fragment_joblist"
+            >
+
+        <action
+                android:id="@+id/action_jobListFragment2_to_registerTodoFragment2"
+                app:destination="@id/register_todo_fragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/register_todo_fragment"
+            android:name="kr.co.cools.today.ui.todo.register.RegisterTodoFragment"
+            android:label="RegisterTodoFragment"
+            tools:layout="@layout/fragment_register_todo"
+            />
+
+</navigation>

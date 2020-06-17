@@ -6,11 +6,8 @@ import kr.co.cools.common.extension.disposableBag
 import kr.co.cools.today.ui.BaseViewModel
 
 class RegisterTodoViewModel @ViewModelInject constructor(val interactor: RegisterTodoInteractor): BaseViewModel<RegisterTodoViewModel.ViewState>() {
-    override fun onCleared() {
-        super.onCleared()
-    }
 
-    override fun dispatch(action: BaseViewModel.ViewModelAction) {
+    override fun dispatch(action: ViewModelAction) {
         notifyChangeViewState(ViewState.ProgressViewState(true))
         when(action){
             is Action.CompleteAction -> {
@@ -39,7 +36,7 @@ class RegisterTodoViewModel @ViewModelInject constructor(val interactor: Registe
         object EmptyTitleViewState: ViewState()
     }
 
-    sealed class Action: BaseViewModel.ViewModelAction{
+    sealed class Action: ViewModelAction{
         data class CompleteAction(val title: String, val description: String, val dayOfWeekNumber: Int): Action()
     }
 }

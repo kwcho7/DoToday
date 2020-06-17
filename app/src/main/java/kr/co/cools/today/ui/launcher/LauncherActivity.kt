@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kr.co.cools.today.R
 
 @AndroidEntryPoint
-class LauncherActivity : AppCompatActivity() {
+class LauncherActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,9 +6,8 @@ import kr.co.cools.common.extension.asDriver
 import kr.co.cools.common.extension.disposableBag
 import kr.co.cools.today.ui.BaseViewModel
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class LauncherViewModel @ViewModelInject constructor(val interactor: LauncherInteractor): BaseViewModel<LauncherViewModel.LauncherState>() {
+class LauncherViewModel @ViewModelInject constructor(private val launcherInteractor: LauncherInteractor): BaseViewModel<LauncherViewModel.LauncherState>() {
 
     init {
         notifyChangeViewState(LauncherState.Idle)
@@ -23,16 +22,16 @@ class LauncherViewModel @ViewModelInject constructor(val interactor: LauncherInt
      */
     fun updateLauncherState() {
         notifyChangeViewState(LauncherState.ShowProgress)
-        interactor.hasTodoEntity()
-            .delay(20, TimeUnit.MILLISECONDS)
+        launcherInteractor.hasTodoEntity()
+            .delay(1000, TimeUnit.MILLISECONDS)
             .asDriver()
             .subscribe(
                 {
                     notifyChangeViewState(LauncherState.HideProgress)
                     if(it){
-                        notifyChangeViewState(LauncherState.StartJobListActivity)
+                        notifyChangeViewState(LauncherState.launchJobList)
                     }else {
-                        notifyChangeViewState(LauncherState.StartTodoListActivity)
+                        notifyChangeViewState(LauncherState.launchTodoList)
                     }
                 },
                 {
@@ -65,12 +64,12 @@ class LauncherViewModel @ViewModelInject constructor(val interactor: LauncherInt
         /**
          *
          */
-        object StartTodoListActivity: LauncherState()
+        object launchTodoList: LauncherState()
 
         /**
          *
          */
-        object StartJobListActivity: LauncherState()
+        object launchJobList: LauncherState()
 
         /**
          * 오류 발생시 메세지를 보여준다.

@@ -10,15 +10,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
+
         <TextView
-                android:text="TextView"
+                android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/titleTextView" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="할일 제목" />
         <TextView
-                android:text="TextView"
+                tools:text="할일입니다."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/descTextView" app:layout_constraintStart_toStartOf="parent"

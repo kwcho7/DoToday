@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: "androidx.navigation.safeargs"
 
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -223,21 +224,19 @@ dependencies {
 }
 
 dependencies {
-    def nav_version = "2.3.0-beta01"
-
     // Java language implementation
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-fragment:2.3.0-rc01"
+    implementation "androidx.navigation:navigation-ui:2.3.0-rc01"
 
     // Kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0-rc01"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0-rc01"
 
     // Dynamic Feature Module Support
-    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:2.3.0-rc01"
 
     // Testing Navigation
-    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.0-rc01"
 }
 
 dependencies {

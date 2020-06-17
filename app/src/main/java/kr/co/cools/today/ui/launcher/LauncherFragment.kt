@@ -14,8 +14,7 @@ import kotlinx.android.synthetic.main.fargment_launcher.*
 import kr.co.cools.common.extension.gone
 import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
-import kr.co.cools.today.ui.job.list.JobListActivity
-import kr.co.cools.today.ui.todo.list.TodoListActivity
+import kr.co.cools.today.ui.home.HomeActivity
 
 @Keep
 @AndroidEntryPoint
@@ -28,6 +27,10 @@ class LauncherFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fargment_launcher, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         savedInstanceState ?: launcherViewModel.updateLauncherState()
         launcherViewModel.observer(this, Observer {
             when(it){
@@ -39,17 +42,16 @@ class LauncherFragment: Fragment() {
                 LauncherViewModel.LauncherState.HideProgress -> {
                     progressBar.gone()
                 }
-                LauncherViewModel.LauncherState.StartTodoListActivity -> {
-                    startActivity(Intent(context, TodoListActivity::class.java))
+                LauncherViewModel.LauncherState.launchTodoList -> {
+                    startActivity(Intent(context, HomeActivity::class.java))
                 }
-                LauncherViewModel.LauncherState.StartJobListActivity -> {
-                    startActivity(Intent(context, JobListActivity::class.java))
+                LauncherViewModel.LauncherState.launchJobList -> {
+                    startActivity(Intent(context, HomeActivity::class.java))
                 }
                 is LauncherViewModel.LauncherState.ErrorMessage -> {
                     TODO("not implementation")
                 }
             }
         })
-        return inflater.inflate(R.layout.fargment_launcher, container, false)
     }
 }

@@ -1,11 +1,14 @@
 package kr.co.cools.today.ui.job.list
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.Keep
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_joblist.*
 import kotlinx.android.synthetic.main.item_job_content.view.*
 import kotlinx.android.synthetic.main.item_job_header.view.*
+import kr.co.cools.common.extension.gone
+import kr.co.cools.common.extension.visible
 import kr.co.cools.today.R
-import kr.co.cools.today.ui.todo.register.RegisterTodoActivity
 import kr.co.cools.today.ui.utils.WeekNumber
 
 @Keep
@@ -26,7 +30,6 @@ class JobListFragment: Fragment() {
     private val jobListAdapter = JobAdapter()
     private val jobDoneListAdapter = JobAdapter()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,11 +39,16 @@ class JobListFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initTabLayout()
+        initRecyclerView()
+        initFloatingButton()
+
         jobListViewModel.observer(this, Observer { viewState ->
             when(viewState){
                 is JobListViewModel.JobListViewState.UpdateJobList -> {
                     jobListAdapter.apply {
                         itemList.clear()
+                        updateEmptyJobMessage(viewState.jobList.count())
                         viewState.jobList.forEach {
                             itemList.add(JobItem(it))
                         }
@@ -56,34 +64,23 @@ class JobListFragment: Fragment() {
                         notifyDataSetChanged()
                     }
                 }
-
                 is JobListViewModel.JobListViewState.UpdateDayOfWeek -> {
-                    (activity as JobListActivity).supportActionBar?.title = viewState.dayOfWeek
                 }
             }
         })
-        initTabLayout()
-        initRecyclerView()
-        initFloatingButton()
-        initToolBar()
     }
 
-
-    private fun initToolBar() {
-        (activity as JobListActivity).apply {
-            setSupportActionBar(toolBar)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_reorder_black_24)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    private fun updateEmptyJobMessage(count: Int) {
+        if (count == 0) {
+            empty_job_text_view.visible()
+        } else {
+            empty_job_text_view.gone()
         }
-
     }
 
     private fun initFloatingButton() {
         floatingActionButton.setOnClickListener {
-            context?.let {
-                startActivity(RegisterTodoActivity.forIntent(it, WeekNumber.getNumber()))
-            }
-
+            findNavController().navigate(R.id.action_jobListFragment2_to_registerTodoFragment2)
         }
     }
 
@@ -105,11 +102,13 @@ class JobListFragment: Fragment() {
             p0?.let {
                 if(it.position == 0){
                     floatingActionButton.show()
+                    updateEmptyJobMessage(jobListAdapter.itemList.count())
                     jobRecyclerView.adapter = jobListAdapter
                     jobRecyclerView.adapter?.notifyDataSetChanged()
                 }
                 else {
                     floatingActionButton.hide()
+                    empty_job_text_view.gone()
                     jobRecyclerView.adapter = jobDoneListAdapter
                     jobRecyclerView.adapter?.notifyDataSetChanged()
                 }

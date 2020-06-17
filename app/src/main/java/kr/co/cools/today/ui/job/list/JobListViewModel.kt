@@ -15,11 +15,6 @@ class JobListViewModel @ViewModelInject constructor(private val todayContext: To
     private val jobList = interactor.getTodayJobAllLive(false)
     private val doneJobList = interactor.getTodayJobAllLive(true)
 
-
-    override fun onCleared() {
-        super.onCleared()
-    }
-
     override fun observer(lifecycleOwner: LifecycleOwner, observer: Observer<JobListViewState>) {
         super.observer(lifecycleOwner, observer)
         jobList.observe(lifecycleOwner, Observer {

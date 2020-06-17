@@ -15,7 +15,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
@@ -61,7 +60,7 @@ class LauncherViewModelTest {
         delay(100)
         verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.ShowProgress)
         verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.HideProgress)
-        verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.StartTodoListActivity)
+        verify(observer, timeout(500).times(1)).onChanged(LauncherViewModel.LauncherState.launchTodoList)
     }
 
     // 2. 할일이 정의되어 있으면 할일 목록으로 이동한다.
@@ -77,7 +76,7 @@ class LauncherViewModelTest {
         delay(100)
         verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.ShowProgress)
         verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.HideProgress)
-        verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.StartJobListActivity)
+        verify(observer, times(1)).onChanged(LauncherViewModel.LauncherState.launchJobList)
     }
 }
 

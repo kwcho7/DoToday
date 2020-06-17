@@ -1,7 +1,6 @@
 package kr.co.cools.today.ui.todo.register
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Range
 import android.view.LayoutInflater
@@ -9,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.annotation.Keep
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_register_todo.*
 import kotlinx.android.synthetic.main.fragment_register_todo.*
 import kotlinx.android.synthetic.main.item_spinner_day.view.*
 import kr.co.cools.common.extension.gone
@@ -39,15 +36,8 @@ class RegisterTodoFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val dayOfWeek = activity?.intent?.getIntExtra(RegisterTodoActivity.EXTRA_KEY_DAY_OF_WEEK, -1)
-
-
         initViewModel()
-        dayOfWeek?.let {
-            initDayOfWeekSpinner(it)
-        }
-
+        initDayOfWeekSpinner(WeekNumber.getNumber())
         initButtonAction()
     }
 
@@ -70,7 +60,7 @@ class RegisterTodoFragment: Fragment() {
                 }
             }
             RegisterTodoViewModel.ViewState.AddCompleteViewState -> {
-                activity?.finish()
+                findNavController().popBackStack()
             }
             RegisterTodoViewModel.ViewState.EmptyTitleViewState -> {
                 showEmptyTitleMessage()
